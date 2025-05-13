@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaChevronLeft, FaChevronRight, FaInfoCircle } from 'react-icons/fa'
 
 const ImageSlider = () => {
@@ -32,6 +32,15 @@ const ImageSlider = () => {
   const [current, setCurrent] = useState(0)
   const [showDescription, setShowDescription] = useState(false)
 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev === slides.length - 1 ? 0 : prev + 1))
+      setShowDescription(false)
+    }, 5000)
+
+    return () => clearInterval(timer)
+  }, [])
+
   const prevSlide = () => {
     setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1))
     setShowDescription(false)
@@ -49,79 +58,69 @@ const ImageSlider = () => {
   const { image, category, title, description } = slides[current]
 
   return (
-    <div className="bg-[#f4f0ea] py-8 px-4 sm:px-6 lg:px-12">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
-        {/* Thumbnails bên trái - ẩn trên mobile */}
-        <div className="hidden md:flex flex-col gap-4">
-          {slides.slice(0, 2).map((slide, index) => (
-            <img
-              key={index}
-              src={slide.image}
-              alt={`Thumbnail ${index}`}
-              className={`w-full rounded-md cursor-pointer border-2 ${
-                index === current
-                  ? 'border-gray-800'
-                  : 'border-transparent opacity-70 hover:opacity-100'
-              }`}
-              onClick={() => {
-                setCurrent(index)
-                setShowDescription(false)
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Ảnh chính */}
-        <div className="md:col-span-2 relative">
+    <div className=" from-[#f4f0ea] to-white py-8 md:py-16   w-full">
+      
+      
+      <div className="w-full">
+        <div className="relative">
           <div 
-            className="relative cursor-pointer" 
+            className="cursor-pointer overflow-hidden shadow-2xl w-full"
             onClick={toggleDescription}
           >
             <img
               src={image}
               alt={title}
-              className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-cover rounded-md shadow-md"
+              className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[700px] object-cover"
             />
             
-            {/* Biểu tượng thông tin khi mô tả đang ẩn */}
             {!showDescription && (
-              <div className="absolute bottom-3 left-3 bg-white/80 p-2 rounded-full shadow">
-                <FaInfoCircle className="text-gray-700" />
+              <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 bg-white/90 p-2 md:p-3 rounded-full shadow-lg">
+                <FaInfoCircle className="text-gray-800 text-lg md:text-xl" />
               </div>
             )}
           </div>
 
-          {/* Nội dung mô tả - hiển thị khi được nhấp */}
           {showDescription && (
-            <div className="absolute bottom-0 left-0 right-0 bg-white/90 p-4 rounded-b-md shadow transition-all sm:bottom-4 sm:left-4 sm:right-auto sm:rounded-md sm:max-w-md">
-              <p className="text-xs font-medium uppercase tracking-widest text-gray-500">
+            <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 right-4 md:right-6 bg-white/95 p-4 md:p-8 rounded-xl shadow-xl backdrop-blur-sm max-w-2xl">
+              <p className="text-xs md:text-sm font-medium uppercase tracking-wider text-gray-500 mb-1 md:mb-2">
                 {category}
               </p>
-              <h3 className="text-lg sm:text-xl font-semibold mt-1 text-gray-900">{title}</h3>
-              <p className="mt-2 text-sm text-gray-700">{description}</p>
+              <h3 className="text-xl md:text-2xl font-serif font-semibold mb-2 md:mb-3 text-gray-900">{title}</h3>
+              <p className="text-sm md:text-base text-gray-700 leading-relaxed">{description}</p>
             </div>
           )}
 
-          {/* Nút điều hướng */}
-          <div className="absolute bottom-3 right-3 flex gap-2 z-10">
+          <div className="absolute bottom-4 md:bottom-6 right-4 md:right-6 flex gap-2 md:gap-3 z-10">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 prevSlide();
               }}
-              className="bg-white/80 hover:bg-white p-2 rounded-full shadow"
+              className="bg-white/90 hover:bg-white p-2 md:p-3 rounded-full shadow-lg"
             >
-              <FaChevronLeft />
+              <FaChevronLeft className="text-lg md:text-xl text-gray-800" />
             </button>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 nextSlide();
               }}
-              className="bg-white/80 hover:bg-white p-2 rounded-full shadow"
+              className="bg-white/90 hover:bg-white p-2 md:p-3 rounded-full shadow-lg"
             >
-              <FaChevronRight />
+              <FaChevronRight className="text-lg md:text-xl text-gray-800" />
             </button>
+          </div>
+
+          <div className="absolute bottom-4 md:bottom-6 left-1/2 transform -translate-x-1/2 flex gap-1 md:gap-2">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                className={`w-1.5 md:w-2 h-1.5 md:h-2 rounded-full transition-all duration-300 ${
+                  current === index ? 'bg-white w-4 md:w-6' : 'bg-white/50'
+                }`}
+                onClick={() => setCurrent(index)}
+              />
+            ))}
           </div>
         </div>
       </div>

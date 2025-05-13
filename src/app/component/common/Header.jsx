@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import Link from 'next/link';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -7,44 +8,33 @@ const Header = () => {
 
   const menuItems = [
     {
-      title: "Destinations",
+      title: "Trang chủ ",
       submenu: [
-        "Hotels & Resorts",
-        "Experiences",
-        "Exclusive Offers",
-        "Villas",
-        "Residences",
-        "About Us",
-        "Gift Card",
-        "Aman at Sea",
-        "Aman Shop",
-        "Aman Interiors"
+        { name: "Phòng khách sạn ", link: "/hotels" },
+        { name: "Đặt phòng khách sạn ", link: "/experiences" },       
+        { name: "Nhà hàng ", link: "/villas" },
+        { name: "Hội nghị, sự kiện ", link: "/residences" },
+        { name: "Phòng trưng bày ", link: "/about" }
       ]
     },
     {
-      title: "Janu",
-      submenu: []
-    },
-    {
-      title: "Diagrams",
+      title: "Liên hệ ",
       submenu: [
-        "Diskonti Annis im...",
-        "USA & the Caribbean",
-        "Europe, Middle East & North Africa",
-        "Asia"
+        { name: "Liên hệ với chúng tôi  ", link: "/diagrams/diskonti" },
+        { name: "Tin tức  ", link: "/diagrams/usa" },
+        { name: "Khuyến mại ", link: "/diagrams/europe" }
       ]
     }
   ];
 
   return (
     <div className="font-serif">
-      {/* Top Navigation Bar */}
-      <div className="fixed top-0 w-full z-50 bg-white border-b border-gray-200">
+      <div className="fixed top-0 w-full z-50 bg-[#713309] border-b border-gray-200">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          {/* Logo */}
-          <div className="text-3xl font-light tracking-wider">Bai Dinh Hotel</div>
+          <Link href="/" className="text-3xl font-light tracking-wider text-white">
+            Bai Dinh Hotel
+          </Link>
 
-          {/* Desktop Menu */}
           <div className="hidden md:flex space-x-10">
             {menuItems.map((item, index) => (
               <div 
@@ -53,20 +43,20 @@ const Header = () => {
                 onMouseEnter={() => setActiveSubmenu(index)}
                 onMouseLeave={() => setActiveSubmenu(null)}
               >
-                <button className="text-sm uppercase tracking-wider hover:text-gray-600">
+                <button className="text-sm uppercase tracking-wider text-white hover:text-gray-200 pb-2">
                   {item.title}
                 </button>
                 
                 {item.submenu.length > 0 && activeSubmenu === index && (
-                  <div className="absolute left-0 mt-2 w-64 bg-white shadow-lg py-2">
+                  <div className="absolute left-0 top-full mt-0 w-64 bg-[#713309] shadow-lg py-2">
                     {item.submenu.map((subItem, subIndex) => (
-                      <a 
+                      <Link 
                         key={subIndex}
-                        href="#" 
-                        className="block px-4 py-2 text-sm hover:bg-gray-100"
+                        href={subItem.link}
+                        className="block px-4 py-2 text-sm text-white hover:bg-[#8B4513]"
                       >
-                        {subIndex === 0 ? <strong>{subItem}</strong> : subItem}
-                      </a>
+                        {subIndex === 0 ? <strong>{subItem.name}</strong> : subItem.name}
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -74,9 +64,8 @@ const Header = () => {
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
           <button 
-            className="md:hidden text-sm uppercase tracking-wider"
+            className="md:hidden text-sm uppercase tracking-wider text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             MENU
@@ -84,23 +73,22 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 bg-white z-40 pt-20 px-6 overflow-y-auto">
+        <div className="fixed inset-0 bg-[#713309] z-40 pt-20 px-6 overflow-y-auto">
           <div className="container mx-auto">
             {menuItems.map((item, index) => (
               <div key={index} className="mb-8">
-                <h2 className="text-2xl mb-4">{item.title}</h2>
+                <h2 className="text-2xl mb-4 text-white">{item.title}</h2>
                 {item.submenu.length > 0 && (
                   <div className="space-y-2">
                     {item.submenu.map((subItem, subIndex) => (
-                      <a 
+                      <Link 
                         key={subIndex}
-                        href="#" 
-                        className="block text-gray-700 hover:text-black"
+                        href={subItem.link}
+                        className="block text-white hover:text-gray-200"
                       >
-                        {subIndex === 0 ? <strong>{subItem}</strong> : subItem}
-                      </a>
+                        {subIndex === 0 ? <strong>{subItem.name}</strong> : subItem.name}
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -108,7 +96,7 @@ const Header = () => {
             ))}
           </div>
           <button 
-            className="absolute top-6 right-6 text-2xl"
+            className="absolute top-6 right-6 text-2xl text-white"
             onClick={() => setIsMenuOpen(false)}
           >
             ×
