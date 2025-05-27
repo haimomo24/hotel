@@ -4,6 +4,7 @@ import Video from './component/homepage/Video'
 import ImageSlider from './component/homepage/SlideImages'
 import Other from './component/homepage/Other'
 import ShowPage from './component/homepage/ShowPage'
+import NewPage from './component/homepage/NewPage'
 
 const page = () => {
   return (
@@ -14,6 +15,7 @@ const page = () => {
       <ImageSlider/>
       <ShowPage/>
       <Other/>
+      <NewPage/>
     </div>
   )
 }
