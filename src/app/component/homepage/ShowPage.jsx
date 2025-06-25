@@ -1,21 +1,25 @@
 import React from 'react'
+import Link from 'next/link'
 
 const ShowPage = () => {
   const services = [
     {
       title: "Phòng nghỉ",
       image: "https://www.baidinhhotel.com/baidinhhotel-images/banner/img/k.jpg",
-      description: "Không gian sang trọng, tiện nghi hiện đại với tầm nhìn tuyệt đẹp"
+      description: "Không gian sang trọng, tiện nghi hiện đại với tầm nhìn tuyệt đẹp",
+      link: "/oderpage" // Thêm đường dẫn cho từng dịch vụ
     },
     {
       title: "Nhà hàng",
       image: "https://www.baidinhhotel.com/baidinhhotel-images/banner/img/R2QN849RJ_WP_20150123_040.jpg",
-      description: "Ẩm thực đa dạng với các món ăn đặc sắc trong không gian tinh tế"
+      description: "Ẩm thực đa dạng với các món ăn đặc sắc trong không gian tinh tế",
+      link: "/restaurant"
     },
     {
       title: "Phòng họp",
-      image: "https://www.baidinhhotel.com/baidinhhotel-images/banner/img/QPPI4VRBB_DSC_9431.jpg",
-      description: "Phòng họp hiện đại, đầy đủ thiết bị cho mọi sự kiện quan trọng"
+      image: "https://www.baidinhhotel.com/baidinhhotel-images/banner/img/QPPI4VRBB_DSC_9431.jpg", 
+      description: "Phòng họp hiện đại, đầy đủ thiết bị cho mọi sự kiện quan trọng",
+      link: "/meeting-rooms"
     }
   ]
 
@@ -45,17 +49,19 @@ const ShowPage = () => {
               <p className="text-gray-600 mb-4">
                 {service.description}
               </p>
-              <button className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 group">
-                Xem thêm
-                <svg
-                  className="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </button>
+              <Link href={service.link}>
+                <button className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 group">
+                  Xem thêm
+                  <svg
+                    className="w-4 h-4 ml-2 transform transition-transform duration-300 group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </button>
+              </Link>
             </div>
           </div>
         ))}
