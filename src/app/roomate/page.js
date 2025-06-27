@@ -1,11 +1,12 @@
 import React from 'react'
-import DashboardPage from '../component/dashboard/DashboardPage'
+import RoomHotel from '../component/homepage/Room/RoomHotel'
 
 const page = () => {
   return (
     <div>
 
-      <DashboardPage/>
+
+        <RoomHotel/>
     </div>
   )
 }

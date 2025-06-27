@@ -1,15 +1,11 @@
+
+'use client';
 import React from "react";
+import { useRouter } from 'next/navigation';
 import {
   CheckCircleIcon,
   WifiIcon,
 } from "@heroicons/react/24/solid";
-
-// 🏨 ShowRoom – Danh sách "Phòng & Giá"
-// ----------------------------------------------------
-// - TailwindCSS v3.x
-// - Heroicons v2 (đã cài sẵn nếu dùng create-vite + tailwindcss)
-// - Chỉ dựng giao diện (không có logic giá / API)
-// ----------------------------------------------------
 
 const rooms = [
   {
@@ -30,6 +26,8 @@ const rooms = [
 ];
 
 export default function ShowRoom() {
+  const router = useRouter();
+
   return (
     <section className="max-w-5xl  mx-auto px-4 py-8 font-sans space-y-5">
       {/* Tiêu đề */}
@@ -82,8 +80,11 @@ export default function ShowRoom() {
 
             {/* Cột hành động */}
             <div className="md:w-56 flex flex-col text-gray-700 justify-center items-start md:items-center gap-2">
-              <button className="w-full md:w-auto bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg px-8 py-3">
-                KIỂM TRA GIÁ
+              <button 
+                onClick={() => router.push('/roomate')}
+                className="w-full md:w-auto bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg px-8 py-3"
+              >
+                Xem chi tiết  
               </button>
               <div className="flex items-center text-xs text-emerald-600 gap-1">
                 <CheckCircleIcon className="w-4 h-4" />

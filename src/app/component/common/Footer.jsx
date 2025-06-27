@@ -28,7 +28,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col min-[470px]:flex-row min-[470px]:items-center gap-2"> {/* Giảm gap */}
                   <button 
-                    onClick={() => router.push('/dashboard')}
+                    onClick={() => router.push('/login')}
                     className="flex items-center max-[470px]:justify-center gap-2 py-2 px-4 rounded-full text-sm font-semibold text-white bg-yellow-800 shadow-transparent hover:shadow-yellow-300 hover:bg-yellow-900"
                   >
                     Dashboard
