@@ -1,90 +1,157 @@
+'use client'
 
-'use client';
-import React from "react";
-import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import {
   CheckCircleIcon,
   WifiIcon,
-} from "@heroicons/react/24/solid";
-
-const rooms = [
-  {
-    id: 1,
-    name: "Phòng Deluxe 2 Giường",
-    img: "https://images.getaroom-cdn.com/image/upload/s--GjUqD_nu--/c_limit,e_improve,fl_lossy.immutable_cache,h_460,q_auto:good,w_460/v1720388137/c5afb73f856267678d2f65df66cf80e9ab648798?_a=BACAEuDL&atc=e7cd1cfa",
-  },
-  {
-    id: 2,
-    name: "Sang Trọng",
-    img: "https://images.getaroom-cdn.com/image/upload/s--LiRgguQK--/c_limit,e_improve,fl_lossy.immutable_cache,h_460,q_auto:good,w_460/v1720388138/9c2d465799dcf626dea49595747991def8316872?_a=BACAEuDL&atc=e7cd1cfa",
-  },
-  {
-    id: 3,
-    name: "3 Giường Đơn",
-    img: "https://images.getaroom-cdn.com/image/upload/s--baR87U5y--/c_limit,e_improve,fl_lossy.immutable_cache,h_460,q_auto:good,w_460/v1720388140/e6e731616e0e25f6d55ee7e1749a2a43f0486251?_a=BACAEuDL&atc=e7cd1cfa",
-  },
-];
+} from '@heroicons/react/24/solid'
 
 export default function ShowRoom() {
-  const router = useRouter();
+  const router = useRouter()
+  const [rooms, setRooms] = useState([])
+  const [typesSummary, setTypesSummary] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [noRoomTypeId, setNoRoomTypeId] = useState(null)
+
+  // 1. Ảnh cho mỗi typeId
+  const typeImages = {
+    1: 'https://owa.bestprice.vn/images/hotels/large/bai-dinh-hotel-5f3a2df20f5b3-450x252.jpg',
+    2: 'https://owa.bestprice.vn/images/hotels/large/bai-dinh-hotel-5f3a2d56b7bcb-450x252.jpg',
+    3: 'https://owa.bestprice.vn/images/hotels/large/bai-dinh-hotel-5f3a2d68e2d45-450x252.jpg',
+    4: 'https://owa.bestprice.vn/images/hotels/large/bai-dinh-hotel-5f3a2d68e2cc9-450x252.jpg',
+  }
+
+  // 2. Tên phòng FIX CỨNG theo typeId
+  const typeTitles = {
+    1: 'Phòng Tiêu Chuẩn',
+    2: 'Phòng Cao Cấp',
+    3: 'Phòng VIP',
+    4: 'Phòng Thượng Hạng',
+  }
+
+  useEffect(() => {
+    async function fetchAndGroup() {
+      setLoading(true)
+      try {
+        const res  = await fetch('/api/rooms')
+        const data = await res.json()
+        const allRooms = data.rooms || []
+        setRooms(allRooms)
+
+        // Build summary grouped by typeId
+        const map = new Map()
+        allRooms.forEach(r => {
+          const key = r.typeId
+          // Lấy tên từ typeTitles thay vì từ API
+          const title = typeTitles[key] || 'Phòng'
+          if (!map.has(key)) {
+            map.set(key, {
+              typeId: key,
+              typeTitle: title,
+              totalRooms: 0,
+              bookedCount: 0,
+              availableCount: 0,
+            })
+          }
+          const entry = map.get(key)
+          entry.totalRooms++
+          if (r.status === 'available') entry.availableCount++
+          else entry.bookedCount++
+        })
+        setTypesSummary(Array.from(map.values()))
+      } catch (err) {
+        console.error(err)
+        setError('Lỗi khi tải dữ liệu phòng.')
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchAndGroup()
+  }, [])
+
+  // Khi click Xem chi tiết
+  const handleViewDetail = (typeId, availableCount) => {
+    if (availableCount === 0) {
+      setNoRoomTypeId(typeId)
+      return
+    }
+    const room = rooms.find(r => r.typeId === typeId && r.status === 'available')
+    if (!room) {
+      setNoRoomTypeId(typeId)
+      return
+    }
+    router.push(`/booking?roomId=${room.id}`)
+  }
+
+  if (loading) {
+    return (
+      <section className="max-w-5xl mx-auto px-4 py-8">
+        <p>Đang tải danh sách phòng…</p>
+      </section>
+    )
+  }
+  if (error) {
+    return (
+      <section className="max-w-5xl mx-auto px-4 py-8">
+        <p className="text-red-500">{error}</p>
+      </section>
+    )
+  }
 
   return (
-    <section className="max-w-5xl  mx-auto px-4 py-8 font-sans space-y-5">
-      {/* Tiêu đề */}
+    <section className="max-w-5xl mx-auto px-4 py-8 font-sans space-y-5">
       <h2 className="text-xl text-gray-700 font-semibold">Phòng & Giá</h2>
-
-      {/* Hộp danh sách phòng */}
-      <div className="bg-white border rounded-2xl divide-y">
-        {rooms.map((room) => (
+      <div className="bg-white border rounded-2xl divide-y divide-gray-100">
+        {typesSummary.map((t, idx) => (
           <div
-            key={room.id}
-            className="flex flex-col md:flex-row gap-4 p-6 last:rounded-b-2xl first:rounded-t-2xl">
-            {/* Thumbnail */}
+            key={t.typeId}
+            className={`
+              flex flex-col md:flex-row gap-4 p-6
+              ${idx === 0 ? 'rounded-t-2xl' : ''}
+              ${idx === typesSummary.length - 1 ? 'rounded-b-2xl' : ''}
+            `}
+          >
+            {/* Ảnh */}
             <div className="w-full md:w-60 h-40 flex-shrink-0">
               <img
-                src={room.img}
-                alt={room.name}
+                src={typeImages[t.typeId] || '/uploads/placeholder.jpg'}
+                alt={t.typeTitle}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
 
-            {/* Thông tin chi tiết */}
+            {/* Thông tin */}
             <div className="flex-1 space-y-1">
               <h3 className="text-lg font-medium text-gray-700 leading-snug">
-                {room.name}
+                {t.typeTitle}
               </h3>
-              <p className="text-sm text-gray-500">Với kỳ nghỉ của bạn:</p>
-              {/* Tiện nghi */}
-              <div className="flex items-center gap-1 text-sm text-gray-700">
+              <p className="text-sm text-gray-500">
+                Tổng: {t.totalRooms} phòng
+              </p>
+              <div className="text-sm text-gray-700">
+                <div>Đã đặt: {t.bookedCount}</div>
+                <div>Chưa đặt: {t.availableCount}</div>
+              </div>
+              <div className="flex items-center gap-1 text-sm text-gray-700 pt-1">
                 <WifiIcon className="w-4 h-4 text-gray-400" />
                 <span>Internet miễn phí</span>
               </div>
-              {/* Link chi tiết */}
-              <button className="text-sm text-blue-600 text-gray-700 hover:underline pt-2 flex items-center gap-1">
-                Tiện nghi phòng, chi tiết và chính sách
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-4 h-4">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
+              {noRoomTypeId === t.typeId && (
+                <p className="mt-2 text-red-500 text-sm">
+                  Đã đầy, không còn phòng trống!
+                </p>
+              )}
             </div>
 
-            {/* Cột hành động */}
+            {/* Button Xem chi tiết */}
             <div className="md:w-56 flex flex-col text-gray-700 justify-center items-start md:items-center gap-2">
-              <button 
-                onClick={() => router.push('/roomate')}
+              <button
+                onClick={() => handleViewDetail(t.typeId, t.availableCount)}
                 className="w-full md:w-auto bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg px-8 py-3"
               >
-                Xem chi tiết  
+                Xem chi tiết
               </button>
               <div className="flex items-center text-xs text-emerald-600 gap-1">
                 <CheckCircleIcon className="w-4 h-4" />
@@ -95,5 +162,5 @@ export default function ShowRoom() {
         ))}
       </div>
     </section>
-  );
+  )
 }

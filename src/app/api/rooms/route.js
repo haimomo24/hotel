@@ -1,56 +1,55 @@
 import { NextResponse } from "next/server"
-import { getDbPool } from "@/lib/db"
+import { getDbPool }   from "@/lib/db"
 
 async function fetchAllRooms(pool) {
   const result = await pool
     .request()
     .query(`
       SELECT
-        r.room_id, r.room_no, r.status,
-        rt.type_name       AS typeName,
-        rt.capacity        AS capacity,
-        rt.base_price      AS basePrice,
-        rt.extra_fee_child AS extraChildFee,
-        rt.extra_fee_adult AS extraAdultFee,
-        ri.img_url         AS imageUrl
+        r.room_id           AS id,
+        r.room_no           AS number,
+        r.status,
+        r.type_id           AS typeId,
+        rt.type_name        AS typeName,
+        rt.capacity         AS capacity,
+        rt.base_price       AS basePrice,
+        rt.extra_fee_child  AS extraChildFee,
+        rt.extra_fee_adult  AS extraAdultFee,
+        ri.img_url          AS imageUrl
       FROM dbo.rooms r
-      JOIN dbo.room_types rt ON rt.type_id = r.type_id
+      JOIN dbo.room_types rt   ON rt.type_id    = r.type_id
       LEFT JOIN dbo.room_images ri ON ri.room_id = r.room_id
       ORDER BY r.room_id, ri.img_id;
     `)
 
   const map = new Map()
   for (const row of result.recordset) {
-    if (!map.has(row.room_id)) {
-      map.set(row.room_id, {
-        id: row.room_id,
-        number: row.room_no,
-        status: row.status,
-        type: row.typeName,
-        capacity: row.capacity,
-        basePrice: row.basePrice,
-        extraChildFee: row.extraChildFee,
-        extraAdultFee: row.extraAdultFee,
-        images: [],
+    if (!map.has(row.id)) {
+      map.set(row.id, {
+        id:             row.id,
+        number:         row.number,
+        status:         row.status,
+        type:           row.typeName,     // <-- thêm field "type" để DashboardPage dùng
+        typeId:         row.typeId,
+        capacity:       row.capacity,
+        basePrice:      row.basePrice,
+        extraChildFee:  row.extraChildFee,
+        extraAdultFee:  row.extraAdultFee,
+        images:         [],
       })
     }
     if (row.imageUrl) {
       let url = row.imageUrl
-
-      // 1) nếu bắt đầu bằng "/images/..." thì đổi sang "/uploads/..."
       if (url.startsWith("/images/")) {
         url = url.replace(/^\/images/, "/uploads")
-
-      // 2) nếu không có slash đầu (ví dụ "rooms/D101-1.jpg") thì prefix /uploads/
       } else if (!url.startsWith("/")) {
         url = `/uploads/${url}`
       }
-
-      map.get(row.room_id).images.push(url)
+      map.get(row.id).images.push(url)
     }
   }
 
-  // đảm bảo mỗi room có ít nhất 3 ảnh
+  // Đảm bảo mỗi room có tối thiểu 3 ảnh
   const rooms = Array.from(map.values()).map((room) => {
     while (room.images.length < 3) {
       room.images.push("/uploads/placeholder.jpg")
@@ -61,14 +60,60 @@ async function fetchAllRooms(pool) {
   return rooms
 }
 
+async function fetchTypesSummary(pool) {
+  const result = await pool
+    .request()
+    .query(`
+      SELECT
+        rt.type_id     AS typeId,
+        rt.type_name   AS typeName,
+        COUNT(r.room_id) AS totalRooms,
+        SUM(CASE WHEN r.status = 'booked'    THEN 1 ELSE 0 END) AS bookedCount,
+        SUM(CASE WHEN r.status = 'available' THEN 1 ELSE 0 END) AS availableCount,
+        MIN(ri.img_url) AS rawImageUrl
+      FROM dbo.room_types rt
+      LEFT JOIN dbo.rooms r       ON r.type_id   = rt.type_id
+      LEFT JOIN dbo.room_images ri ON ri.room_id = r.room_id
+      GROUP BY rt.type_id, rt.type_name
+      ORDER BY rt.type_id;
+    `)
+
+  // Map rawImageUrl thành URL public
+  return result.recordset.map((row) => {
+    let url = row.rawImageUrl || "/uploads/placeholder.jpg"
+    if (url.startsWith("/images/")) {
+      url = url.replace(/^\/images/, "/uploads")
+    } else if (!url.startsWith("/")) {
+      url = `/uploads/${url}`
+    }
+    return {
+      typeId:        row.typeId,
+      typeName:      row.typeName,
+      totalRooms:    row.totalRooms,
+      bookedCount:   row.bookedCount,
+      availableCount: row.availableCount,
+      imageUrl:      url,
+    }
+  })
+}
+
 export async function GET(request) {
   try {
-    const pool = await getDbPool()
-    const url = new URL(request.url)
-    const id = url.searchParams.get("id")
+    const pool    = await getDbPool()
+    const urlObj  = new URL(request.url)
+    const groupBy = urlObj.searchParams.get("groupBy")
+    const id      = urlObj.searchParams.get("id")
 
+    // Nếu client cần summary theo type
+    if (groupBy === "type") {
+      const types = await fetchTypesSummary(pool)
+      return NextResponse.json({ types })
+    }
+
+    // Ngược lại lấy full list rooms
     const rooms = await fetchAllRooms(pool)
 
+    // Nếu có id → trả chi tiết 1 room
     if (id) {
       const room = rooms.find((r) => String(r.id) === id)
       if (!room) {
@@ -77,25 +122,20 @@ export async function GET(request) {
       return NextResponse.json({ room })
     }
 
+    // Mặc định trả toàn bộ rooms
     return NextResponse.json({ rooms })
   } catch (err) {
     console.error("API GET /api/rooms error:", err)
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    )
   }
 }
 
 export async function POST(request) {
   try {
-    const {
-      number,
-      status,
-      typeId,
-      capacity,
-      basePrice,
-      extraChildFee,
-      extraAdultFee,
-    } = await request.json()
-
+    const { number, status, typeId } = await request.json()
     const pool = await getDbPool()
     const result = await pool
       .request()
@@ -118,23 +158,12 @@ export async function POST(request) {
 
 export async function PUT(request) {
   try {
-    const url = new URL(request.url)
-    const id = url.searchParams.get("id")
+    const urlObj = new URL(request.url)
+    const id     = urlObj.searchParams.get("id")
     if (!id) {
       return NextResponse.json({ error: "Missing id" }, { status: 400 })
     }
-
-    const {
-      number,
-      status,
-      typeId,
-      capacity,
-      basePrice,
-      extraChildFee,
-      extraAdultFee,
-      images,
-    } = await request.json()
-
+    const { number, status, typeId } = await request.json()
     const pool = await getDbPool()
     await pool
       .request()
@@ -150,8 +179,6 @@ export async function PUT(request) {
         WHERE room_id = @id;
       `)
 
-    // TODO: nếu muốn lưu images vào table dbo.room_images thì bổ sung cập nhật tại đây
-
     return NextResponse.json({ message: "Updated" })
   } catch (err) {
     console.error("API PUT /api/rooms error:", err)
@@ -161,12 +188,11 @@ export async function PUT(request) {
 
 export async function DELETE(request) {
   try {
-    const url = new URL(request.url)
-    const id = url.searchParams.get("id")
+    const urlObj = new URL(request.url)
+    const id     = urlObj.searchParams.get("id")
     if (!id) {
       return NextResponse.json({ error: "Missing id" }, { status: 400 })
     }
-
     const pool = await getDbPool()
     await pool
       .request()

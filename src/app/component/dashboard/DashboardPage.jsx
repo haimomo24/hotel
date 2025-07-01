@@ -94,7 +94,7 @@ export default function DashboardPage() {
                 <td className="px-6 py-4">{room.id}</td>
                 <td className="px-6 py-4">{room.number}</td>
                 <td className="px-6 py-4">{room.type}</td>
-                <td className="px-6 py-4">${room.basePrice}</td>
+                <td className="px-6 py-4">{room.basePrice}  vnd</td>
                 <td className="px-6 py-4">
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-medium ${
