@@ -1,23 +1,38 @@
 import { NextResponse } from 'next/server'
-import { getDbPool }   from '@/lib/db'
+import { getDbPool } from '@/lib/db'
 
-// Bắt buộc chạy trên Node.js để getDbPool (mssql) hoạt động
 export const runtime = 'nodejs'
+
+/** Utility: parse & validate bookingId */
+function parseBookingId(id) {
+  const bid = parseInt(id, 10)
+  if (Number.isNaN(bid) || bid <= 0) {
+    throw new Error('Invalid bookingId')
+  }
+  return bid
+}
 
 /**
  * GET /api/booking/:bookingId
- * Trả về chi tiết booking
  */
 export async function GET(request, { params }) {
-  const bookingId = params.bookingId
+  let bookingId
+  try {
+    bookingId = parseBookingId(params.bookingId)
+  } catch {
+    return NextResponse.json(
+      { success: false, message: 'Invalid bookingId' },
+      { status: 400 }
+    )
+  }
 
   try {
-    const pool = await getDbPool()
+    const pool   = await getDbPool()
     const result = await pool
       .request()
       .input('bid', bookingId)
       .query(`
-        SELECT 
+        SELECT
           booking_id       AS bookingId,
           room_id          AS roomId,
           customer_name    AS customerName,
@@ -38,13 +53,9 @@ export async function GET(request, { params }) {
         { status: 404 }
       )
     }
-
-    return NextResponse.json({
-      success: true,
-      booking: result.recordset[0]
-    })
+    return NextResponse.json({ success: true, booking: result.recordset[0] })
   } catch (err) {
-    console.error('API GET /api/booking/[bookingId] error:', err)
+    console.error('GET /api/booking/[bookingId] error:', err)
     return NextResponse.json(
       { success: false, message: 'Internal Server Error' },
       { status: 500 }
@@ -54,18 +65,29 @@ export async function GET(request, { params }) {
 
 /**
  * PUT /api/booking/:bookingId
- * Cập nhật thông tin liên hệ + số người
  */
 export async function PUT(request, { params }) {
-  const bookingId = params.bookingId
-  const {
-    customerName,
-    customerEmail,
-    customerPhone,
-    adultCount,
-    childCount
-  } = await request.json()
+  let bookingId
+  try {
+    bookingId = parseBookingId(params.bookingId)
+  } catch {
+    return NextResponse.json(
+      { success: false, message: 'Invalid bookingId' },
+      { status: 400 }
+    )
+  }
 
+  let body
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json(
+      { success: false, message: 'Invalid JSON body' },
+      { status: 400 }
+    )
+  }
+
+  const { customerName, customerEmail, customerPhone, adultCount, childCount } = body
   if (
     !customerName ||
     !customerEmail ||
@@ -80,13 +102,13 @@ export async function PUT(request, { params }) {
   }
 
   try {
-    const pool = await getDbPool()
-    await pool
+    const pool   = await getDbPool()
+    const result = await pool
       .request()
-      .input('bid',        bookingId)
-      .input('name',       customerName)
-      .input('email',      customerEmail)
-      .input('phone',      customerPhone)
+      .input('bid', bookingId)
+      .input('name', customerName)
+      .input('email', customerEmail)
+      .input('phone', customerPhone)
       .input('adultCount', adultCount)
       .input('childCount', childCount)
       .query(`
@@ -98,11 +120,63 @@ export async function PUT(request, { params }) {
           adult_count    = @adultCount,
           child_count    = @childCount
         WHERE booking_id = @bid;
+
+        SELECT @@ROWCOUNT AS affectedRows;
       `)
 
+    const updated = result.recordset?.[0]?.affectedRows
+    if (!updated) {
+      return NextResponse.json(
+        { success: false, message: 'Booking not found' },
+        { status: 404 }
+      )
+    }
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error('API PUT /api/booking/[bookingId] error:', err)
+    console.error('PUT /api/booking/[bookingId] error:', err)
+    return NextResponse.json(
+      { success: false, message: 'Internal Server Error' },
+      { status: 500 }
+    )
+  }
+}
+
+/**
+ * DELETE /api/booking/:bookingId
+ */
+export async function DELETE(request, { params }) {
+  let bookingId
+  try {
+    bookingId = parseBookingId(params.bookingId)
+  } catch {
+    return NextResponse.json(
+      { success: false, message: 'Invalid bookingId' },
+      { status: 400 }
+    )
+  }
+
+  try {
+    const pool   = await getDbPool()
+    const result = await pool
+      .request()
+      .input('bid', bookingId)
+      .query(`
+        DELETE FROM dbo.bookings
+        WHERE booking_id = @bid;
+
+        SELECT @@ROWCOUNT AS deletedRows;
+      `)
+
+    const deleted = result.recordset?.[0]?.deletedRows
+    if (!deleted) {
+      return NextResponse.json(
+        { success: false, message: 'Booking not found' },
+        { status: 404 }
+      )
+    }
+    return NextResponse.json({ success: true })
+  } catch (err) {
+    console.error('DELETE /api/booking/[bookingId] error:', err)
     return NextResponse.json(
       { success: false, message: 'Internal Server Error' },
       { status: 500 }

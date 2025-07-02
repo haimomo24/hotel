@@ -11,12 +11,13 @@ export default function DashboardPage() {
   const pageSize = 10
   const router = useRouter()
 
-  // 1. Fetch data
+  // 1. Fetch data (kỳ vọng API /api/rooms trả về { rooms: [ { id, number, type, basePrice, status, checkOut } ] })
   async function fetchRooms() {
     setLoading(true)
     try {
       const res = await fetch('/api/rooms')
       const data = await res.json()
+      // Nếu API trả về trường checkOut là ISO string, giữ nguyên để so sánh
       setRooms(data.rooms || [])
     } catch (err) {
       console.error('Failed to fetch rooms', err)
@@ -29,14 +30,42 @@ export default function DashboardPage() {
     fetchRooms()
   }, [])
 
-  // 2. Xóa phòng
+  // 2. Auto-release: nếu phòng đang occupied nhưng đã qua giờ checkOut, đổi về available
+  useEffect(() => {
+    const now = Date.now()
+    rooms.forEach(room => {
+      if (
+        room.status === 'occupied' &&
+        room.checkOut && 
+        new Date(room.checkOut).getTime() < now
+      ) {
+        // Gọi API PATCH để cập nhật database
+        fetch(`/api/rooms?id=${room.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'available' }),
+        })
+          .then(res => {
+            if (!res.ok) throw new Error('Patch failed')
+            // Cập nhật state ngay lập tức
+            setRooms(prev =>
+              prev.map(r =>
+                r.id === room.id ? { ...r, status: 'available' } : r
+              )
+            )
+          })
+          .catch(err => console.error('Auto-release error', err))
+      }
+    })
+  }, [rooms])
+
+  // 3. Xóa phòng
   async function handleDelete(id) {
     if (!confirm('Bạn có chắc muốn xóa phòng này?')) return
     try {
       await fetch(`/api/rooms?id=${id}`, { method: 'DELETE' })
       setRooms(prev => {
         const next = prev.filter(r => r.id !== id)
-        // nếu xóa giảm số trang thì lùi page
         const maxPage = Math.ceil(next.length / pageSize) || 1
         if (currentPage > maxPage) setCurrentPage(maxPage)
         return next
@@ -46,7 +75,7 @@ export default function DashboardPage() {
     }
   }
 
-  // 3. Chuyển đến trang sửa
+  // 4. Chuyển đến trang sửa
   function handleEdit(id) {
     router.push(`/dashboard/rooms/${id}/edit`)
   }
@@ -55,7 +84,7 @@ export default function DashboardPage() {
     return <p className="p-4">Đang tải danh sách phòng…</p>
   }
 
-  // 4. Tính phân trang
+  // 5. Phân trang
   const totalItems = rooms.length
   const totalPages = Math.ceil(totalItems / pageSize) || 1
   const start = (currentPage - 1) * pageSize
@@ -94,7 +123,7 @@ export default function DashboardPage() {
                 <td className="px-6 py-4">{room.id}</td>
                 <td className="px-6 py-4">{room.number}</td>
                 <td className="px-6 py-4">{room.type}</td>
-                <td className="px-6 py-4">{room.basePrice}  vnd</td>
+                <td className="px-6 py-4">{room.basePrice.toLocaleString()}₫</td>
                 <td className="px-6 py-4">
                   <span
                     className={`px-2 py-1 rounded-full text-xs font-medium ${
@@ -143,7 +172,6 @@ export default function DashboardPage() {
           >
             Prev
           </button>
-
           {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
             <button
               key={n}
@@ -157,7 +185,6 @@ export default function DashboardPage() {
               {n}
             </button>
           ))}
-
           <button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage(currentPage + 1)}

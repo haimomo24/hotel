@@ -19,7 +19,7 @@ const ShowPage = () => {
       title: "Phòng họp",
       image: "https://www.baidinhhotel.com/baidinhhotel-images/banner/img/QPPI4VRBB_DSC_9431.jpg", 
       description: "Phòng họp hiện đại, đầy đủ thiết bị cho mọi sự kiện quan trọng",
-      link: "/mettingroom"
+      link: "/restaurant"
     }
   ]
 

@@ -10,11 +10,11 @@ const Header = () => {
     {
       title: "Trang chủ ",
       submenu: [
-        { name: "Phòng khách sạn ", link: "/hotels" },
-        { name: "Đặt phòng khách sạn ", link: "/experiences" },       
-        { name: "Nhà hàng ", link: "/villas" },
-        { name: "Hội nghị, sự kiện ", link: "/residences" },
-        { name: "Phòng trưng bày ", link: "/about" }
+       
+        { name: "Đặt phòng khách sạn ", link: "/oderpage" },       
+        { name: "Nhà hàng ", link: "/restaurant" },
+        { name: "Hội nghị, sự kiện ", link: "/" },
+        { name: "Phòng trưng bày ", link: "/" }
       ]
     },
     {
