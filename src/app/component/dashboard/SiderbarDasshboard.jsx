@@ -10,7 +10,7 @@ const SiderbarDasshboard = () => {
   const menuItems = [
     { name: 'Phòng nghỉ  ', path: '/dashboard' },
     { name: 'Đơn Phòng nghỉ ', path: '/dashboard/booking' },
-    { name: 'Nhà hàng ', path: '/dashboard/restaurant' },
+    { name: 'Phản hồi của khách ', path: '/dashboard/restaurant' },
     { name: 'Đơn nhà hàng', path: '/dashboard/customers' },
     { name: 'Phòng họp', path: '/dashboard/reports' },
     { name: 'đơn phòng họp', path: '/dashboard/settings' }
