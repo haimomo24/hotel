@@ -11,13 +11,12 @@ export default function DashboardPage() {
   const pageSize = 10
   const router = useRouter()
 
-  // 1. Fetch data (kỳ vọng API /api/rooms trả về { rooms: [ { id, number, type, basePrice, status, checkOut } ] })
+  // 1. Fetch data
   async function fetchRooms() {
     setLoading(true)
     try {
       const res = await fetch('/api/rooms')
       const data = await res.json()
-      // Nếu API trả về trường checkOut là ISO string, giữ nguyên để so sánh
       setRooms(data.rooms || [])
     } catch (err) {
       console.error('Failed to fetch rooms', err)
@@ -39,7 +38,6 @@ export default function DashboardPage() {
         room.checkOut && 
         new Date(room.checkOut).getTime() < now
       ) {
-        // Gọi API PATCH để cập nhật database
         fetch(`/api/rooms?id=${room.id}`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
@@ -47,7 +45,6 @@ export default function DashboardPage() {
         })
           .then(res => {
             if (!res.ok) throw new Error('Patch failed')
-            // Cập nhật state ngay lập tức
             setRooms(prev =>
               prev.map(r =>
                 r.id === room.id ? { ...r, status: 'available' } : r
@@ -80,11 +77,29 @@ export default function DashboardPage() {
     router.push(`/dashboard/rooms/${id}/edit`)
   }
 
+  // 5. Cập nhật trạng thái phòng
+  async function handleStatusChange(id, newStatus) {
+    try {
+      const res = await fetch(`/api/rooms?id=${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus }),
+      })
+      if (!res.ok) throw new Error('Failed to update status')
+      setRooms(prev =>
+        prev.map(r => (r.id === id ? { ...r, status: newStatus } : r))
+      )
+    } catch (err) {
+      console.error('Failed to update room status', err)
+      alert('Cập nhật trạng thái thất bại!')
+    }
+  }
+
   if (loading) {
     return <p className="p-4">Đang tải danh sách phòng…</p>
   }
 
-  // 5. Phân trang
+  // 6. Phân trang
   const totalItems = rooms.length
   const totalPages = Math.ceil(totalItems / pageSize) || 1
   const start = (currentPage - 1) * pageSize
@@ -125,15 +140,20 @@ export default function DashboardPage() {
                 <td className="px-6 py-4">{room.type}</td>
                 <td className="px-6 py-4">{room.basePrice.toLocaleString()}₫</td>
                 <td className="px-6 py-4">
-                  <span
+                  <select
+                    value={room.status}
+                    onChange={(e) =>
+                      handleStatusChange(room.id, e.target.value)
+                    }
                     className={`px-2 py-1 rounded-full text-xs font-medium ${
                       room.status === 'occupied'
                         ? 'bg-red-100 text-red-700'
                         : 'bg-green-100 text-green-700'
                     }`}
                   >
-                    {room.status === 'occupied' ? 'Đã đặt' : 'Chưa đặt'}
-                  </span>
+                    <option value="available">Chưa đặt</option>
+                    <option value="occupied">Đã đặt</option>
+                  </select>
                 </td>
                 <td className="px-6 py-4 space-x-4">
                   <button

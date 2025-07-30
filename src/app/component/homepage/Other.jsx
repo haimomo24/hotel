@@ -4,36 +4,42 @@ import { FaArrowRight } from 'react-icons/fa'
 const Other = () => {
   const locations = [
     {
-      title: "Khoá tu mùa hè  ",
-      description: " Các bạn sẽ được kết giao với nhiều bạn mới, được cùng nhau tu tập dưới mái chùa Bái Đính linh thiêng, với sự hướng dẫn chỉ bảo tận tình của các quý Thầy cùng Ban tổ chức",
-      image: "https://storage-phatsuonline.sgp1.digitaloceanspaces.com/files/2020/07/20200728-DSC08389.jpg"
+      title: "Khoá tu mùa hè",
+      description: "Các bạn sẽ được kết giao với nhiều bạn mới, được cùng nhau tu tập dưới mái chùa Bái Đính linh thiêng, với sự hướng dẫn chỉ bảo tận tình của các quý Thầy cùng Ban tổ chức",
+      image: "https://storage-phatsuonline.sgp1.digitaloceanspaces.com/files/2020/07/20200728-DSC08389.jpg",
+      link: "https://chuabaidinhninhbinh.com/"
     },
     {
       title: "In the City",
       description: "Summer in the city, the skyline gilded with sunlight and opportunities for cultural discovery abound.",
-      image: "https://www.chudu24.com/wp-content/uploads/2016/12/Tuong-tam-the-phat-chua-bai-dinh1-e1453322400603.jpg"
+      image: "https://www.chudu24.com/wp-content/uploads/2016/12/Tuong-tam-the-phat-chua-bai-dinh1-e1453322400603.jpg",
+      link: "https://example.com/in-the-city"
     },
     {
-      title: "Bái Đính Về đêm  ",
+      title: "Bái Đính Về đêm",
       description: "Vé tráng lệ và rộng lớn của chùa Bái Đính càng được nhấn mạnh hơn khi về đêm",
-      image: "https://images.vietnamtourism.gov.vn/vn/images/2016/anhInternet/ChuaBaiDinhvedem.jpg"
+      image: "https://images.vietnamtourism.gov.vn/vn/images/2016/anhInternet/ChuaBaiDinhvedem.jpg",
+      link: "/nightbaidinh"
     }
   ]
 
   return (
-    <section className=" py-16 px-6 md:px-12 lg:px-24">
+    <section className="py-16 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-light text-[#FFFFF0] mb-4 tracking-wide">Trải nhiệm du lịch tâm linh </h2>
+          <h2 className="text-4xl font-light text-[#FFFFF0] mb-4 tracking-wide">Trải nghiệm du lịch tâm linh</h2>
           <p className="text-lg text-[#FFFFF0] max-w-2xl mx-auto">
-          Những mệt mỏi của cuộc sống sẽ tan biến ngay lập tức, là nơi tuyệt vời để tận hưởng vẻ đẹp của thiên nhiên
+            Những mệt mỏi của cuộc sống sẽ tan biến ngay lập tức, là nơi tuyệt vời để tận hưởng vẻ đẹp của thiên nhiên
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {locations.map((location, index) => (
-            <div 
+            <a 
               key={index} 
+              href={location.link} 
+              target="_blank" 
+              rel="noopener noreferrer"
               className="group relative overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
             >
               <div className="h-80 overflow-hidden">
@@ -56,7 +62,7 @@ const Other = () => {
                   </button>
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const NewPage = () => {
@@ -9,15 +10,21 @@ const NewPage = () => {
       </h2>
 
       <ul className="bg-white rounded-lg shadow-lg max-w-2xl mx-auto divide-y divide-gray-200">
+      <Link href='/dashboard'>
         <li className="hover:bg-gray-50 transition duration-300">
           <div className="flex items-center p-4 cursor-pointer">
+         
             <div className="shrink-0">
+             
               <img
                 className="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover"
                 src="https://www.baidinhhotel.com/baidinhhotel-images/news/img1/RBA4UW17GS_3-20.jpg"
                 alt="Hoa anh đào"
               />
+              
+              
             </div>
+           
             <div className="ml-4 flex-1">
               <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-1">
                 Hoa anh đào ở đất Phật
@@ -29,6 +36,7 @@ const NewPage = () => {
             </div>
           </div>
         </li>
+        </Link>
 
         <li className="hover:bg-gray-50 transition duration-300">
           <div className="flex items-center p-4 cursor-pointer">

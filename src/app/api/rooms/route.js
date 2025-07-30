@@ -133,6 +133,37 @@ export async function GET(request) {
   }
 }
 
+export async function PATCH(request) {
+  try {
+    const urlObj = new URL(request.url);
+    const id = urlObj.searchParams.get("id");
+    if (!id) {
+      return NextResponse.json({ error: "Missing id" }, { status: 400 });
+    }
+
+    const { status } = await request.json();
+    if (!status) {
+      return NextResponse.json({ error: "Missing status" }, { status: 400 });
+    }
+
+    const pool = await getDbPool();
+    await pool
+      .request()
+      .input("id", id)
+      .input("status", status)
+      .query(`
+        UPDATE dbo.rooms
+        SET status = @status
+        WHERE room_id = @id;
+      `);
+
+    return NextResponse.json({ message: "Status updated successfully" });
+  } catch (err) {
+    console.error("API PATCH /api/rooms error:", err);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
+}
+
 export async function POST(request) {
   try {
     const { number, status, typeId } = await request.json()

@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
               {/* Hotline Button */}
               <div className="group relative">
                 <a 
-                  href="tel:0123456789"
+                  href="tel:02293868789"
                   className="bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center hover:scale-110"
                 >
                   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -45,7 +45,7 @@ export default function RootLayout({ children }) {
                 </a>
                 {/* Tooltip */}
                 <div className="absolute right-full mr-3 top-1/2 transform -translate-y-1/2 bg-black text-white px-3 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Hotline: 0123 456 789
+                  Hotline: 02293868789
                   <div className="absolute left-full top-1/2 transform -translate-y-1/2 border-4 border-transparent border-l-black"></div>
                 </div>
               </div>

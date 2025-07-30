@@ -13,8 +13,8 @@ const Header = () => {
        
         { name: "Đặt phòng khách sạn ", link: "/oderpage" },       
        
-        { name: "Hội nghị, sự kiện ", link: "/" },
-        { name: "Phòng trưng bày ", link: "/" }
+        { name: "Hội nghị, sự kiện ", link: "/roommetting" },
+        { name: "Phòng trưng bày ", link: "/roommetting" }
       ]
     },
     {
@@ -25,6 +25,14 @@ const Header = () => {
         { name: "Nhà hàng ", link: "/restaurant" },
         { name: "Hội nghị, sự kiện ", link: "/" },
         { name: "Phòng trưng bày ", link: "/" }
+      ]
+    },
+    {
+      title: "Dịch vụ khác   ",
+      submenu: [
+        { name: "Dịch vụ xe điện   ", link: "/car" },
+        { name: "Bái Đính về đêm    ", link: "/nightbaidinh" },
+      
       ]
     },
     {
@@ -83,7 +91,7 @@ const Header = () => {
             </svg>
             <div className="text-sm">
               <div className="text-xs opacity-80">Hotline</div>
-              <div className="font-semibold">0123 456 789</div>
+              <div className="font-semibold">02293868789</div>
             </div>
           </div>
 
