@@ -5,19 +5,19 @@ const ShowPage = () => {
   const services = [
     {
       title: "Phòng nghỉ",
-      image: "https://www.baidinhhotel.com/baidinhhotel-images/banner/img/k.jpg",
+      image: "/images/phongnghi.JPG",
       description: "Không gian sang trọng, tiện nghi hiện đại với tầm nhìn tuyệt đẹp",
       link: "/oderpage" // Thêm đường dẫn cho từng dịch vụ
     },
     {
       title: "Nhà hàng",
-      image: "https://www.baidinhhotel.com/baidinhhotel-images/banner/img/R2QN849RJ_WP_20150123_040.jpg",
+      image: "/images/nhahang.JPG",
       description: "Ẩm thực đa dạng với các món ăn đặc sắc trong không gian tinh tế",
       link: "/restaurant"
     },
     {
       title: "Phòng họp",
-      image: "https://www.baidinhhotel.com/baidinhhotel-images/banner/img/QPPI4VRBB_DSC_9431.jpg", 
+      image: "/images/phonghop.JPG", 
       description: "Phòng họp hiện đại, đầy đủ thiết bị cho mọi sự kiện quan trọng",
       link: "/roommetting"
     }

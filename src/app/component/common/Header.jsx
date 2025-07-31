@@ -26,14 +26,14 @@ const Header = () => {
     {
       title: "Dịch vụ khác   ",
       submenu: [
-        { name: "Dịch vụ xe điện   ", link: "/car" },
+        { name: "Dịch vụ xe điện   ", link: "/carpage" },
         { name: "Bái Đính về đêm    ", link: "/nightbaidinh" },
       ]
     },
     {
       title: "Liên kết   ",
       submenu: [
-        { name: "Dịch vụ xe điện   ", link: "/car" },
+        { name: "Dịch vụ xe điện   ", link: "/carpage" },
         { name: "Bái Đính về đêm    ", link: "/nightbaidinh" },
       ]
     },
@@ -41,7 +41,7 @@ const Header = () => {
       title: "Thông tin  liên hệ ",
       submenu: [
         { name: "Liên hệ với chúng tôi  ", link: "/contact" },
-        { name: "Tin tức  ", link: "/diagrams/usa" },
+        { name: "Tin tức  ", link: "/" },
       ]
     }
   ];

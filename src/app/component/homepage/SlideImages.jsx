@@ -15,9 +15,10 @@ import {
 } from 'react-icons/io5'
 
 const slides = [
-  { image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/06/6c/22/59/bai-dinh-hotel.jpg?w=900&h=500&s=1' },
-  { image: 'https://ik.imagekit.io/tvlk/generic-asset/TzEv3ZUmG4-4Dz22hvmO9NUDzw1DGCIdWl4oPtKumOg=/lodging/12000000/11780000/11779500/11779494/37053f7c_z.jpg' },
-  { image: 'https://owa.bestprice.vn/images/hotels/uploads/bai-dinh-hotel-5f3a083481393.jpg' },
+  { image: '/images/anhslider_1.jpg' },
+  { image: '/images/anhslide_2.JPG' },
+  { image: '/images/anhslide_3.jpg' },
+  { image: '/images/anhslide_3.jpg' },
 ]
 
 const prices = {
@@ -97,7 +98,7 @@ const ImageSlider = () => {
         <FaChevronRight className="text-gray-700 text-sm sm:text-base" />
       </button>
 
-      <div className="absolute inset-x-0 bottom-0 translate-y-1/2 flex justify-center px-2 sm:px-4">
+      <div className="absolute inset-x-0 bottom-0 translate-y-1/2 flex justify-center px-2 sm:px-4 mt-[100p] sm:mt-0">
         <div className="w-full max-w-[95%] sm:max-w-3xl md:max-w-4xl bg-white bg-opacity-95 rounded-xl shadow-2xl p-4 sm:p-6">
           <h2 className="text-base sm:text-lg font-semibold text-gray-800 text-center mb-3 sm:mb-5">
             Đặt dịch vụ nhanh chóng

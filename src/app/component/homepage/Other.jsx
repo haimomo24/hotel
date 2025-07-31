@@ -18,7 +18,7 @@ const Other = () => {
     {
       title: "Bái Đính Về đêm",
       description: "Vé tráng lệ và rộng lớn của chùa Bái Đính càng được nhấn mạnh hơn khi về đêm",
-      image: "https://images.vietnamtourism.gov.vn/vn/images/2016/anhInternet/ChuaBaiDinhvedem.jpg",
+      image: "/images/baidinhvedem.jpg",
       link: "/nightbaidinh"
     }
   ]

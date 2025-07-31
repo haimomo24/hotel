@@ -75,11 +75,7 @@ const SliderRoometting = () => {
                               className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[700px] object-cover"
                             />
                             
-                            {!showDescription && (
-                              <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 bg-white/90 p-2 md:p-3 rounded-full shadow-lg">
-                                <FaInfoCircle className="text-gray-800 text-lg md:text-xl" />
-                              </div>
-                            )}
+                           
                           </div>
                 
                           {showDescription && (
