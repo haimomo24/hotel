@@ -11,7 +11,7 @@ import ImageSlider from './component/homepage/SlideImages'
 
 const page = () => {
   return (
-    <div className='bg-[#410009]'>
+    <div className=''>
 
       <HomePage/>
       <ImageSlider/>

@@ -4,13 +4,13 @@ import React from 'react'
 const NewPage = () => {
   return (
     <div className="container mx-auto px-4 py-12">
-      <h2 className="text-4xl font-light text-center mb-8 text-[#FFFFF0]">
+      <h2 className="text-4xl font-light text-center mb-8 ">
         Tin tức
         <div className="w-20 h-1 bg-blue-500 mx-auto mt-2"></div>
       </h2>
 
       <ul className="bg-white rounded-lg shadow-lg max-w-2xl mx-auto divide-y divide-gray-200">
-      <Link href='/dashboard'>
+      <Link href='/newpage'>
         <li className="hover:bg-gray-50 transition duration-300">
           <div className="flex items-center p-4 cursor-pointer">
          

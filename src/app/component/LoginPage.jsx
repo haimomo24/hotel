@@ -41,11 +41,11 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center mt-[80px] mb-[150px] px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-col justify-center mt-[80px] mb-[250px] px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img
           className="mx-auto h-10 w-auto"
-          src="/images/093e49ac9bb22dec74a3.jpg"
+          src="/images/logo1.jpg"
           alt="Your Company"
         />
         <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
@@ -93,7 +93,7 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className="flex w-full justify-center rounded-md bg-[#356D3D] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               {loading ? "Signing in..." : "Sign in"}
             </button>

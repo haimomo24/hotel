@@ -7,15 +7,15 @@ const Footer = () => {
   
   return (
     <div>
-        <section className="pt-8 pb-4 bg-[#713309]"> {/* Giảm padding top và bottom */}
-          <div className="mx-auto bg-[#713309] max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="pt-8 pb-4 bg-[#356D3D]"> {/* Giảm padding top và bottom */}
+          <div className="mx-auto bg-[#356D3D] max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pb-6 border-b-2 border-gray-200"> {/* Giảm gap và padding bottom */}
               <div className="flex flex-col gap-4 xl:gap-6 w-full lg:max-w-full mx-auto"> {/* Giảm gap */}
                 <div className="flex flex-col gap-4"> {/* Giảm gap */}
-                  <h2 className="font-manrope font-bold text-2xl leading-snug text-gray-900 max-[470px]:text-center"> {/* Giảm font size */}
+                  <h2 className="font-manrope font-bold text-2xl leading-snug text-white max-[470px]:text-center"> {/* Giảm font size */}
                     BaiDinh Hotel
                   </h2>
-                  <p className="text-sm font-normal text-gray-500 max-[470px]:text-center"> {/* Giảm font size */}
+                  <p className="text-sm font-normal text-white max-[470px]:text-center"> {/* Giảm font size */}
                     Take the First Step Towards Success!
                   </p>
                   <div className="flex items-center max-[470px]:justify-center gap-3"> {/* Giảm gap */}
@@ -40,14 +40,14 @@ const Footer = () => {
               </div>
               <div className="w-full lg:max-w-full mx-auto flex flex-col min-[470px]:flex-row justify-between gap-4 sm:gap-10 md:gap-6 xl:gap-12"> {/* Giảm gaps */}
                 <div className="">
-                  <h6 className="text-base font-medium text-gray-900 mb-4 max-[470px]:text-center"> {/* Giảm margin bottom và font size */}
+                  <h6 className="text-base font-medium text-white mb-4 max-[470px]:text-center"> {/* Giảm margin bottom và font size */}
                     Pagedone
                   </h6>
                   <ul className="flex flex-col max-[470px]:items-center max-[470px]:justify-center gap-3"> {/* Giảm gap */}
-                    <li><a href="#" className="text-sm font-normal text-gray-600 hover:text-yellow-800">Home</a></li>
-                    <li><a href="#" className="text-sm font-normal text-gray-600 hover:text-yellow-800">About</a></li>
-                    <li><a href="#" className="text-sm font-normal text-gray-600 hover:text-yellow-800">Pricing</a></li>
-                    <li><a href="#" className="text-sm font-normal text-gray-600 hover:text-yellow-800">Pro Version</a></li>
+                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Home</a></li>
+                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">About</a></li>
+                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Pricing</a></li>
+                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Pro Version</a></li>
                   </ul>
                 </div>
               </div>

@@ -27,8 +27,8 @@ const Other = () => {
     <section className="py-16 px-6 md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-light text-[#FFFFF0] mb-4 tracking-wide">Trải nghiệm du lịch tâm linh</h2>
-          <p className="text-lg text-[#FFFFF0] max-w-2xl mx-auto">
+          <h2 className="text-4xl font-light  mb-4 tracking-wide">Trải nghiệm du lịch tâm linh</h2>
+          <p className="text-lg  max-w-2xl mx-auto">
             Những mệt mỏi của cuộc sống sẽ tan biến ngay lập tức, là nơi tuyệt vời để tận hưởng vẻ đẹp của thiên nhiên
           </p>
         </div>

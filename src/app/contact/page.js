@@ -106,7 +106,7 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen mt-[60px]">
       {/* Header Section */}
-      <div className="bg-gradient-to-r from-[#410009] to-[#6B1423] text-white py-16">
+      <div className="bg-gradient-to-r from-[#356D3D] to-[#356D3D] text-white py-16">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">Liên hệ với chúng tôi</h1>
           <p className="text-xl opacity-90">Khách sạn Bái Đính - Nơi nghỉ dưỡng lý tưởng</p>

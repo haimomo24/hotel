@@ -56,8 +56,8 @@ const MapPage = () => {
               </div>
             </div>
 
-            {/* Info bar at bottom */}
-            <div className="p-6 bg-gradient-to-r from-[#410009] to-[#6B1423] text-white">
+            {/* Info bar at bottom bg-[#356D3D] */}
+            <div className="p-6 bg-gradient-to-r from-[#356D3D] to-[#638E69] text-white">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-xl font-bold mb-1">Khách sạn Bái Đính</h3>
