@@ -26,7 +26,7 @@ const ShowPage = () => {
   return (
     <div className="container mx-auto px-4 py-16">
       <h2 className="text-4xl font-light text-center mb-8 ">
-        Dịch vụ của chúng tôi
+        DỊCH VỤ CỦA CHÚNG TÔI 
         <div className="w-24 h-1 bg-blue-600 mx-auto mt-4"></div>
       </h2>
 

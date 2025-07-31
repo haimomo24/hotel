@@ -5,7 +5,7 @@ const NewPage = () => {
   return (
     <div className="container mx-auto px-4 py-12">
       <h2 className="text-4xl font-light text-center mb-8 ">
-        Tin tức
+        TIN TỨC 
         <div className="w-20 h-1 bg-blue-500 mx-auto mt-2"></div>
       </h2>
 

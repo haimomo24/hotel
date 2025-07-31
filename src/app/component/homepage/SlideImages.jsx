@@ -101,11 +101,11 @@ const ImageSlider = () => {
       <div className="absolute inset-x-0 bottom-0 translate-y-1/2 flex justify-center px-2 sm:px-4 mt-[100p] sm:mt-0">
         <div className="w-full max-w-[95%] sm:max-w-3xl md:max-w-4xl bg-white bg-opacity-95 rounded-xl shadow-2xl p-4 sm:p-6">
           <h2 className="text-base sm:text-lg font-semibold text-gray-800 text-center mb-3 sm:mb-5">
-            Đặt dịch vụ nhanh chóng
+            ĐẶT DỊCH VỤ 
           </h2>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Dịch vụ</label>
+            <label className="block text-sm font-medium text-gray-700 mb-1">DỊCH VỤ</label>
             <div className="flex items-center border border-gray-300 rounded-md px-3 py-2">
               <IoLocationSharp className="text-gray-400 mr-2" />
               <select
