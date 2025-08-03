@@ -24,7 +24,7 @@ const Other = () => {
   ]
 
   return (
-    <section className="py-16 px-6 md:px-12 lg:px-24">
+    <section className="py-16 px-6 bg-[#DBE2DD] md:px-12 lg:px-24">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-light  mb-4 tracking-wide">TRẢI NHIỆM DU LỊCH TÂM LINH </h2>

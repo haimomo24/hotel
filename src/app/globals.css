@@ -1,26 +1,39 @@
 @import "tailwindcss";
 
+/* Force light mode - ngăn dark mode tự động */
+html {
+  color-scheme: light only;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: #ffffff;
+  --color-foreground: #171717;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+/* Ghi đè dark mode - luôn dùng light colors */
+:root, 
+:root[data-theme="dark"],
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff !important;
+    --foreground: #171717 !important;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #ffffff !important;
+  color: #171717 !important;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Force all text elements to use dark text */
+*, *::before, *::after {
+  color-scheme: light;
 }

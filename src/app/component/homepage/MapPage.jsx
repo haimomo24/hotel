@@ -10,14 +10,14 @@ const MapPage = () => {
   }
 
   return (
-    <div className="w-full py-8 md:py-16 ">
+    <div className="w-full bg-[#DBE2DD]   py-8 md:py-16 ">
       <div className="container mx-auto px-4">
         {/* Title Section */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#FFFFF0] mb-4">
-            Vị trí khách sạn
+          <h2 className="text-3xl md:text-4xl font-bold  mb-4">
+            Vị trí 
           </h2>
-          <p className="text-[#FFFFF0] text-lg">
+          <p className=" text-lg">
             Click vào bản đồ để xem thông tin chi tiết và liên hệ
           </p>
         </div>
@@ -60,8 +60,8 @@ const MapPage = () => {
             <div className="p-6 bg-gradient-to-r from-[#356D3D] to-[#638E69] text-white">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-xl font-bold mb-1">Khách sạn Bái Đính</h3>
-                  <p className="text-white/90 text-sm">Gia Sinh, Gia Viễn, Ninh Bình, Việt Nam</p>
+                  <h3 className="text-xl font-bold mb-1">Khách xá Bái Đính</h3>
+                  <p className="text-white/90 text-sm">Phường Tây Hoa Lư, Ninh Bình, Việt Nam</p>
                 </div>
                 <div className="flex items-center space-x-2 text-white/90">
                   <span className="text-sm">Click để xem chi tiết</span>

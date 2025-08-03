@@ -122,7 +122,7 @@ export default function BookingPage() {
 
   /** ----------------- JSX ------------------ */
   return (
-    <div className="max-w-4xl mx-auto mt-12 p-6 bg-white shadow-lg rounded-lg space-y-8">
+    <div className="max-w-4xl mx-auto mt-[80px] p-6 bg-white shadow-lg rounded-lg space-y-8">
       <h1 className="text-3xl font-bold text-gray-800">
         Phòng {room.number} – {room.type}
       </h1>

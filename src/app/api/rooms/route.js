@@ -40,6 +40,10 @@ async function fetchAllRooms(pool) {
     }
     if (row.imageUrl) {
       let url = row.imageUrl
+      // Fix cho file không tồn tại
+      if (url === "D101-1.jpg") {
+        url = "1751016048252-6i7azy.jpg"
+      }
       if (url.startsWith("/images/")) {
         url = url.replace(/^\/images/, "/uploads")
       } else if (!url.startsWith("/")) {

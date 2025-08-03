@@ -11,9 +11,9 @@ import ImageSlider from './component/homepage/SlideImages'
 
 const page = () => {
   return (
-    <div className=''>
+    <div className=' '>
 
-      <HomePage/>
+     
       <ImageSlider/>
       
       <ShowPage/>

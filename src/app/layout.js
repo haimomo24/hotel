@@ -21,8 +21,13 @@ export default function RootLayout({ children }) {
   
   return (
     <html lang="en">
+      <head>
+        <meta name="color-scheme" content="light only" />
+        <meta name="theme-color" content="#ffffff" />
+      </head>
       <body 
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        style={{ colorScheme: 'light' }}
       >
         {segment !== 'dashboard' && <Header/>}
         {children}

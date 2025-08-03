@@ -49,10 +49,10 @@ const Footer = () => {
               <div className="w-full lg:max-w-full mx-auto flex flex-col min-[470px]:flex-row justify-between gap-4 sm:gap-10 md:gap-6 xl:gap-12"> {/* Giảm gaps */}
                 <div className="">
                   <h6 className="text-base font-medium text-white mb-4 max-[470px]:text-center"> {/* Giảm margin bottom và font size */}
-                    Dịch vụ 
+                  Phường Tây Hoa Lư, Ninh Bình, Việt Nam
                   </h6>
-                  <ul className="flex flex-col max-[470px]:items-center max-[470px]:justify-center gap-3"> {/* Giảm gap */}
-                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Khách sạn </a></li>
+                  <ul className="flex flex-col max-[470px]:items-center max-[470px]:justify-center gap-3"> 
+                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800"> hotline :02293868789 </a></li>
                     <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Xe điện </a></li>
                     <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Liên hệ với chúng tôi</a></li>
                     <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Liên kết khác </a></li>

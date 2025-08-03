@@ -25,10 +25,10 @@ export default function ShowRoom() {
 
   // 2. Tên phòng FIX CỨNG theo typeId
   const typeTitles = {
-    1: 'Phòng Tiêu Chuẩn',
-    2: 'Phòng Cao Cấp',
-    3: 'Phòng VIP',
-    4: 'Phòng Thượng Hạng',
+    1: 'Phòng deluxe/double',
+    2: 'Phòng Baidinh Triple',
+    3: 'Phòng extrabed',
+    4: 'Phòng president',
   }
 
   useEffect(() => {

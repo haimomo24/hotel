@@ -7,7 +7,7 @@ const SlideRestaurant = () => {
      const slides = [
         {
           image:
-            'https://trangangroup.com/upload/service/am_thuc_3.jpg',
+            '/images/anhslider_1.jpg',
           category: 'BIỆT THỰ AMAN',
           title: 'Nơi ẩn náu độc đáo',
           description:
@@ -15,14 +15,14 @@ const SlideRestaurant = () => {
         },
         {
           image:
-            'https://trangangroup.com/upload/service/am_thuc_2.jpg',
+            '/images/anhslide_2.JPG',
           category: 'THẾ GIỚI ĐẢO',
           title: 'Quần đảo mùa hè',
           description: 'Khám phá các đảo Aman ở vùng Caribe, Philippines và Indonesia.',
         },
         {
           image:
-            'https://trangangroup.com/upload/service/am_thuc_1.jpg',
+            '/images/anhslide_3.jpg',
           category: 'ẨN MÌNH NƠI NÚI CAO',
           title: 'Không gian yên bình',
           description:
@@ -74,22 +74,10 @@ const SlideRestaurant = () => {
                       className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[700px] object-cover"
                     />
                     
-                    {!showDescription && (
-                      <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 bg-white/90 p-2 md:p-3 rounded-full shadow-lg">
-                        <FaInfoCircle className="text-gray-800 text-lg md:text-xl" />
-                      </div>
-                    )}
+                   
                   </div>
         
-                  {showDescription && (
-                    <div className="absolute bottom-4 md:bottom-6 left-4 md:left-6 right-4 md:right-6 bg-white/95 p-4 md:p-8 rounded-xl shadow-xl backdrop-blur-sm max-w-2xl">
-                      <p className="text-xs md:text-sm font-medium uppercase tracking-wider text-gray-500 mb-1 md:mb-2">
-                        {category}
-                      </p>
-                      <h3 className="text-xl md:text-2xl font-serif font-semibold mb-2 md:mb-3 text-gray-900">{title}</h3>
-                      <p className="text-sm md:text-base text-gray-700 leading-relaxed">{description}</p>
-                    </div>
-                  )}
+                  
         
                   <div className="absolute bottom-4 md:bottom-6 right-4 md:right-6 flex gap-2 md:gap-3 z-10">
                     <button
