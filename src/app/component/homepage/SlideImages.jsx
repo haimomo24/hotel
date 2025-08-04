@@ -85,7 +85,7 @@ const ImageSlider = () => {
   const sectionMarginBottom = service === 'Đặt phòng' ? 'mb-[-50px]' : 'mb-[-50px]';
 
   return (
-    <section className={`relative bg-[#356D3D]  w-full ${sectionMarginBottom}`}>
+    <section className={`relative bg-[#356D3D] mt-[80px] mb-[-250px] sm:mt-0 sm:mb-0  w-full ${sectionMarginBottom}`}>
       <img
         src={slides[current].image}
         alt=""
@@ -98,7 +98,7 @@ const ImageSlider = () => {
         <FaChevronRight className="text-gray-700 text-sm sm:text-base" />
       </button>
 
-      <div className="absolute  inset-x-0 bottom-0 translate-y-1/2 flex justify-center px-2 sm:px-4 mt-[100p] sm:mt-0">
+      <div className="hidden sm:flex absolute inset-x-0 bottom-0 translate-y-1/2 justify-center px-2 sm:px-4 mt-[100p] sm:mt-0">
         <div className="w-full bg-[#EBEBEB] max-w-[95%] sm:max-w-3xl md:max-w-4xl bg-opacity-95 rounded-xl shadow-2xl p-4 sm:p-6">
           <h2 className="text-base sm:text-lg font-Philosopher text-gray-800 text-center mb-3 sm:mb-5">
             ĐẶT DỊCH VỤ 

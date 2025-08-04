@@ -35,7 +35,7 @@ const Header = () => {
     },
     {
       title: "Sự Kiện",
-      link: "/contact" // Đây là mục không có submenu
+      link: "/event" // Đây là mục không có submenu
     },
     {
       title: "Thư Viện",
@@ -43,7 +43,13 @@ const Header = () => {
     },
     {
       title: "Liên hệ",
-      link: "/contact" // Đây là mục không có submenu
+      link: "/contact" ,
+      submenu: [
+        { name: " Khảo sát ", link: "/oderpage" },
+        { name: "Tuyển Dụng  ", link: "/recruitment" }
+        
+       
+      ]// Đây là mục không có submenu
     },
   ];
 
@@ -122,7 +128,7 @@ const Header = () => {
                        transition-transform duration-300 ease-in-out hover:scale-110" // Hiệu ứng cho nút MENU
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            MENU
+            menu
           </button>
         </div>
       </div>
