@@ -45,7 +45,7 @@ const Header = () => {
       title: "Liên hệ",
       link: "/contact" ,
       submenu: [
-        { name: " Khảo sát ", link: "/oderpage" },
+        { name: " Khảo sát ", link: "/survey" },
         { name: "Tuyển Dụng  ", link: "/recruitment" }
         
        

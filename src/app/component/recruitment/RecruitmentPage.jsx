@@ -27,23 +27,55 @@ const RecruitmentPage = () => {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(formData)
-    alert('Thông tin ứng tuyển đã được gửi thành công!')
+    try {
+      const form = new FormData()
+      form.append('name', formData.name)
+      form.append('email', formData.email)
+      form.append('phone', formData.phone)
+      form.append('position', formData.position)
+      form.append('message', formData.message)
+      form.append('cv', formData.cv)
+
+      const res = await fetch('/api/recruitment', {
+        method: 'POST',
+        body: form,
+      })
+
+      const result = await res.json()
+      if (result.success) {
+        alert(result.message)
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          position: '',
+          message: '',
+          cv: null,
+        })
+      } else {
+        alert('Đã xảy ra lỗi: ' + result.message)
+      }
+    } catch (error) {
+      console.error('Submit Error:', error)
+      alert('Lỗi kết nối server')
+    }
   }
 
   return (
     <div className="min-h-screen mt-[80px] bg-gradient-to-br from-[#f0f9f3] to-white py-12 px-4 md:px-10 lg:px-32 font-[serif]">
       <div className="bg-white rounded-2xl shadow-xl border border-[#cce3d5] p-8 md:p-12">
         <h2 className="text-4xl font-bold text-[#356D3D] mb-10 tracking-wide">
-          Tuyển dụng 
+          Tuyển dụng
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Họ và tên */}
           <div>
-            <label className="block text-base font-medium text-[#356D3D] mb-1">Họ và tên</label>
+            <label className="block text-base font-medium text-[#356D3D] mb-1">
+              Họ và tên
+            </label>
             <input
               type="text"
               name="name"
@@ -57,7 +89,9 @@ const RecruitmentPage = () => {
 
           {/* Email */}
           <div>
-            <label className="block text-base font-medium text-[#356D3D] mb-1">Email</label>
+            <label className="block text-base font-medium text-[#356D3D] mb-1">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -71,7 +105,9 @@ const RecruitmentPage = () => {
 
           {/* Số điện thoại */}
           <div>
-            <label className="block text-base font-medium text-[#356D3D] mb-1">Số điện thoại</label>
+            <label className="block text-base font-medium text-[#356D3D] mb-1">
+              Số điện thoại
+            </label>
             <input
               type="tel"
               name="phone"
@@ -85,7 +121,9 @@ const RecruitmentPage = () => {
 
           {/* Vị trí ứng tuyển */}
           <div>
-            <label className="block text-base font-medium text-[#356D3D] mb-1">Vị trí ứng tuyển</label>
+            <label className="block text-base font-medium text-[#356D3D] mb-1">
+              Vị trí ứng tuyển
+            </label>
             <select
               name="position"
               value={formData.position}
@@ -95,14 +133,18 @@ const RecruitmentPage = () => {
             >
               <option value="">-- Chọn vị trí --</option>
               {positions.map((pos, index) => (
-                <option key={index} value={pos}>{pos}</option>
+                <option key={index} value={pos}>
+                  {pos}
+                </option>
               ))}
             </select>
           </div>
 
           {/* Tin nhắn */}
           <div>
-            <label className="block text-base font-medium text-[#356D3D] mb-1">Tin nhắn (nếu cần thiết)</label>
+            <label className="block text-base font-medium text-[#356D3D] mb-1">
+              Tin nhắn (nếu cần thiết)
+            </label>
             <textarea
               name="message"
               value={formData.message}
@@ -115,7 +157,9 @@ const RecruitmentPage = () => {
 
           {/* Gửi CV */}
           <div>
-            <label className="block text-base font-medium text-[#356D3D] mb-1">Tải lên CV (PDF/DOC)</label>
+            <label className="block text-base font-medium text-[#356D3D] mb-1">
+              Tải lên CV (PDF/DOC)
+            </label>
             <input
               type="file"
               name="cv"
