@@ -12,8 +12,8 @@ const SiderbarDasshboard = () => {
     { name: 'Đơn Phòng nghỉ ', path: '/dashboard/booking' },
     { name: 'Phản hồi của khách ', path: '/dashboard/restaurant' },
     { name: 'Đơn xe điện', path: '/dashboard/car' },
-    { name: 'Phòng họp', path: '/dashboard/reports' },
-    { name: 'đơn phòng họp', path: '/dashboard/settings' }
+    { name: 'Tuyển Dụng', path: '/dashboard/recruitment' },
+    { name: 'Phản Hồi', path: '/dashboard/survey' }
   ]
 
   return (
