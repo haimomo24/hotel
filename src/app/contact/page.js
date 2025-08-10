@@ -105,7 +105,7 @@ const ContactPage = () => {
 
   return (
     <div className="min-h-screen mt-[60px]">
-      {/* Header Section */}
+     
      
 
       <div className="container mx-auto px-4 py-12">
@@ -115,7 +115,7 @@ const ContactPage = () => {
             <div>
               <h2 className="text-3xl font-bold text-gray-800 mb-6">Thông tin liên hệ</h2>
               
-              <div className="space-y-6">
+              <div className="">
                 <div className="flex items-start space-x-4">
                   <div className=" p-3 rounded-full">
                     <svg className="w-6 h-6 text-[#356D3D]" fill="none" stroke="currentColor" viewBox="0 0 24 24">

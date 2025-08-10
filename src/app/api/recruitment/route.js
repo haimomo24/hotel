@@ -38,3 +38,19 @@ export async function POST(req) {
     return NextResponse.json({ success: false, message: "Lỗi server" }, { status: 500 });
   }
 }
+
+export async function GET() {
+  try {
+    const pool = await getDbPool();
+    const result = await pool.request().query(`
+      SELECT id, full_name, email, phone, position_applied, message, cv_file_name, cv_file_path
+      FROM recruitment_applications
+      ORDER BY id DESC
+    `);
+
+    return NextResponse.json({ success: true, data: result.recordset });
+  } catch (error) {
+    console.error("GET API Error:", error);
+    return NextResponse.json({ success: false, message: "Lỗi server" }, { status: 500 });
+  }
+}

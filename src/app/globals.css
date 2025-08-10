@@ -44,3 +44,8 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+@import url('https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&display=swap');
+
+.font-Philosopher {
+  font-family: 'Philosopher', sans-serif;
+}
