@@ -23,7 +23,7 @@ const ShowPage = () => {
     },
     {
       title: "Dịch vụ xe điện",
-      image: "/images/phonghop.JPG",
+      image: "https://sinhtour.vn/wp-content/uploads/2024/01/ve-xe-dien-bai-dinh-1.jpg",
       description: "Phòng họp hiện đại, đầy đủ thiết bị cho mọi sự kiện quan trọng",
       link: "/roommetting"
     }
