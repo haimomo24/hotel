@@ -20,12 +20,7 @@ html {
 /* Ghi đè dark mode - luôn dùng light colors */
 :root, 
 :root[data-theme="dark"],
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #ffffff !important;
-    --foreground: #171717 !important;
-  }
-}
+
 
 body {
   background: #ffffff !important;
