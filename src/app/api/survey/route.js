@@ -3,6 +3,24 @@ import { getDbPool } from "@/lib/db";
 import { NextResponse } from "next/server";
 import sql from "mssql";
 
+// ------------------ Lấy dữ liệu khảo sát ------------------
+export async function GET() {
+  try {
+    const pool = await getDbPool();
+    const result = await pool.request().query(`
+      SELECT * 
+      FROM service_survey
+      ORDER BY id DESC
+    `);
+
+    return NextResponse.json({ success: true, data: result.recordset });
+  } catch (error) {
+    console.error("Survey GET API Error:", error);
+    return NextResponse.json({ success: false, message: "Lỗi server khi lấy dữ liệu" }, { status: 500 });
+  }
+}
+
+// ------------------ Gửi dữ liệu khảo sát ------------------
 export async function POST(req) {
   try {
     const data = await req.json();
@@ -79,7 +97,7 @@ export async function POST(req) {
 
     return NextResponse.json({ success: true, message: "Khảo sát đã được gửi!" });
   } catch (error) {
-    console.error("Survey API Error:", error);
+    console.error("Survey POST API Error:", error);
     return NextResponse.json({ success: false, message: "Lỗi server" }, { status: 500 });
   }
 }

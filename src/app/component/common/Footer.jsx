@@ -48,14 +48,20 @@ const Footer = () => {
               </div>
               <div className="w-full lg:max-w-full mx-auto flex flex-col min-[470px]:flex-row justify-between gap-4 sm:gap-10 md:gap-6 xl:gap-12"> {/* Giảm gaps */}
                 <div className="">
+                  <br></br>
+                  <br></br>
+                  <br></br>
                   <h6 className="text-base font-medium text-white mb-4 max-[470px]:text-center"> {/* Giảm margin bottom và font size */}
-                  Phường Tây Hoa Lư, Ninh Bình, Việt Nam
+                  Địa Chỉ : Phường Tây Hoa Lư, Ninh Bình, Việt Nam
                   </h6>
+                 
+                     
+                    
                   <ul className="flex flex-col max-[470px]:items-center max-[470px]:justify-center gap-3"> 
-                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800"> hotline :02293868789 </a></li>
-                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Xe điện </a></li>
-                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Liên hệ với chúng tôi</a></li>
-                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800">Liên kết khác </a></li>
+                    <li><a href="#" className="text-white font-normal text-gray-600 hover:text-yellow-800"> Hotline :02293868789 </a></li>
+                                <li> <a href="mailto:info@baidinhhotel.com" className="text-white hover:text-yellow-800">
+                      info@trangangroup.com
+                      </a></li>
                   </ul>
                 </div>
               </div>

@@ -45,10 +45,10 @@ const TitleReview = () => {
               {/* Ảnh xen giữa */}
               <div className="flex justify-center my-6">
                 <img
-                  src="/images/Ban Do-01.jpg"
+                  src="/images/DSC09995-HDR.JPG"
                   alt="Bản đồ dịch vụ"
                   className="w-full max-w-[800px] max-h-[800px] object-contain rounded-lg cursor-pointer border border-gray-300 shadow-md transform transition-transform duration-300 hover:scale-105"
-                  onClick={() => setShowImage(true)}
+                 
                 />
               </div>
 
