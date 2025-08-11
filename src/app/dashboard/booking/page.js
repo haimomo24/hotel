@@ -4,29 +4,31 @@ import { getDbPool } from '@/lib/db'
 import DeleteBookingButton from '@/app/component/dashboard/DeleteBookingButton'
 import sql from 'mssql'
 
-export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
+export const runtime  = 'nodejs'
+export const dynamic  = 'force-dynamic'
 
-export default async function Page(props) {
+export default async function Page (props) {
   /* ---------- 1. Lấy searchParams ---------- */
-  const searchParams = props.searchParams || {}
+  const { searchParams: rawSearchParams } = props
+  const searchParams = await rawSearchParams
 
   /* ---------- 2. Phân trang ---------- */
   const currentPage = Math.max(1, parseInt(searchParams.page, 10) || 1)
-  const limit = 10
-  const offset = (currentPage - 1) * limit
+  const limit       = 10
+  const offset      = (currentPage - 1) * limit
 
   /* ---------- 3. Bộ lọc tháng–năm và ngày ---------- */
-  const monthYear = searchParams.monthYear || '' // "2025-07"
-  const selectedDateStr = searchParams.selectedDate || '' // "2025-07-15"
-  let filterMonth = null, filterYear = null, filterDate = null
+  const monthYear        = searchParams.monthYear     || ''      // "2025-07"
+  const selectedDateStr  = searchParams.selectedDate  || ''      // "2025-07-15"
+  let   filterMonth = null, filterYear = null, filterDate = null
 
   if (selectedDateStr) {
-    filterDate = new Date(selectedDateStr)
+    // Ưu tiên lọc theo ngày
+    filterDate = new Date(selectedDateStr)    // truyền Date cho mssql
   } else if (monthYear) {
     const [y, m] = monthYear.split('-')
-    filterYear = parseInt(y, 10)
-    filterMonth = parseInt(m, 10)
+    filterYear   = parseInt(y, 10)
+    filterMonth  = parseInt(m, 10)
   }
 
   /* ---------- 4. Truy vấn DB ---------- */
@@ -34,11 +36,11 @@ export default async function Page(props) {
   const [dataResult, countResult] = await Promise.all([
     pool
       .request()
-      .input('offset', sql.Int, offset)
-      .input('limit', sql.Int, limit)
-      .input('filterMonth', sql.Int, filterMonth)
-      .input('filterYear', sql.Int, filterYear)
-      .input('filterDate', sql.Date, filterDate)
+      .input('offset',      sql.Int,  offset)
+      .input('limit',       sql.Int,  limit)
+      .input('filterMonth', sql.Int,  filterMonth)
+      .input('filterYear',  sql.Int,  filterYear)
+      .input('filterDate',  sql.Date, filterDate)
       .query(`
         SELECT
           b.booking_id      AS id,
@@ -64,9 +66,9 @@ export default async function Page(props) {
 
     pool
       .request()
-      .input('filterMonth', sql.Int, filterMonth)
-      .input('filterYear', sql.Int, filterYear)
-      .input('filterDate', sql.Date, filterDate)
+      .input('filterMonth', sql.Int,  filterMonth)
+      .input('filterYear',  sql.Int,  filterYear)
+      .input('filterDate',  sql.Date, filterDate)
       .query(`
         SELECT COUNT(*) AS count
         FROM dbo.bookings b
@@ -76,15 +78,15 @@ export default async function Page(props) {
       `)
   ])
 
-  const bookings = dataResult.recordset
-  const totalCount = countResult.recordset[0].count
-  const totalPages = Math.ceil(totalCount / limit)
+  const bookings    = dataResult.recordset
+  const totalCount  = countResult.recordset[0].count
+  const totalPages  = Math.ceil(totalCount / limit)
 
   /* ---------- 5. Hàm dựng query giữ bộ lọc ---------- */
   const buildQueryString = (page) => {
     const params = new URLSearchParams()
     params.set('page', page)
-    if (monthYear) params.set('monthYear', monthYear)
+    if (monthYear)       params.set('monthYear', monthYear)
     if (selectedDateStr) params.set('selectedDate', selectedDateStr)
     return `?${params.toString()}`
   }
@@ -100,6 +102,7 @@ export default async function Page(props) {
         </h1>
 
         <form method="GET" className="flex flex-wrap items-center gap-3">
+          {/* Lọc tháng–năm */}
           <input
             type="month"
             name="monthYear"
@@ -107,6 +110,7 @@ export default async function Page(props) {
             className="border rounded px-3 py-2"
           />
 
+          {/* Lọc theo ngày */}
           <input
             type="date"
             name="selectedDate"
@@ -114,6 +118,7 @@ export default async function Page(props) {
             className="border rounded px-3 py-2"
           />
 
+          {/* luôn reset page về 1 khi lọc */}
           <input type="hidden" name="page" value="1" />
 
           <button
