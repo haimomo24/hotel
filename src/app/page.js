@@ -8,14 +8,18 @@ import NewPage from './component/homepage/NewPage'
 import ContactPage from './contact/page'
 import MapPage from './component/homepage/MapPage'
 import ImageSlider from './component/homepage/SlideImages'
+import HeaderMain from './component/common/HeaderMain'
+import GioiThieu from './component/homepage/GioiThieu'
 
 const page = () => {
   return (
     <div className=' '>
+      <HeaderMain/>
 
-     
       <ImageSlider/>
       
+    <GioiThieu/>
+
       <ShowPage/>
       <Other/>
       <NewPage/>

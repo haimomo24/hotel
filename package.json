@@ -12,6 +12,7 @@
     "@headlessui/react": "^2.2.2",
     "@heroicons/react": "^2.2.0",
     "@prisma/client": "^6.11.0",
+    "flatpickr": "^4.6.13",
     "mssql": "^11.0.1",
     "next": "^15.3.4",
     "react": "^18.3.1",
